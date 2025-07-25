@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Admin</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <style>
+    body {
+      background-color: #f1f1f1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    .admin-box {
+      background: white;
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 600px;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1em;
+    }
+
+    th, td {
+      padding: 0.8em;
+      border-bottom: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #f9f9f9;
+    }
+
+    .total-row td {
+      font-weight: bold;
+      border-top: 2px solid #000;
+    }
+
+    .title-col {
+      text-align: left;
+    }
+
+    .right {
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-box">
+    <h2>Estadísticas de Anuncios</h2>
+    <table>
+      <thead>
+        <tr>
+          <th class="title-col">Título</th>
+          <th>Clics</th>
+          <th class="right">$ Ganado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stat in stats %}
+        <tr>
+          <td class="title-col">{{ stat.title }}</td>
+          <td>{{ stat.clicks }}</td>
+          <td class="right">${{ "%.2f"|format(stat.total) }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="total-row">
+          <td class="title-col">Total General</td>
+          <td>{{ total_clicks }}</td>
+          <td class="right">${{ "%.2f"|format(total_earned) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

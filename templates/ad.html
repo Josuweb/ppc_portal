@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Publicidad Disponible</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="main-container">
+    <h2>Selecciona una publicidad</h2>
+
+    <div class="ads-grid">
+      {% for ad in ads %}
+      <div class="ad-card">
+        <img src="{{ url_for('static', filename=ad.image) }}" alt="{{ ad.title }}">
+        <h3>{{ ad.title }}</h3>
+        <p>{{ ad.description }}</p>
+        <a href="/ad/{{ ad.id }}" class="ad-button">Abrir Publicidad</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>
+
+
+<script>
+  function handleClick(adId, adUrl) {
+    fetch(`/click/${adId}`, {
+      method: 'POST'
+    }).then(() => {
+      window.open(adUrl, '_blank');
+    }).catch(err => {
+      console.error('Error al registrar clic.');
+    });
+  }
+</script>
